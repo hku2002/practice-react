@@ -74,9 +74,10 @@ const RemoveButton = styled.button`
   cursor: pointer;
 `;
 
-const TodoTemplate = () => {
+const TodoTemplate = (props) => {
     const [tasks, setTasks] = useState([]);
     const [newTask, setNewTask] = useState('');
+    const { title } = props;
 
     const addTask = () => {
         if (newTask.trim() !== '') {
@@ -104,7 +105,7 @@ const TodoTemplate = () => {
 
     return (
         <TodoContainer>
-            <h1>Todo List</h1>
+            <h1>{title}</h1>
             <h2>{getTodayDate()}</h2>
             <InputContainer>
                 <Input
