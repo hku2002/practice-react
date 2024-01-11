@@ -77,7 +77,7 @@ const RemoveButton = styled.button`
 const TodoTemplate = (props) => {
     const [tasks, setTasks] = useState([]);
     const [newTask, setNewTask] = useState('');
-    const { title } = props;
+    const { title, date } = props;
 
     const addTask = () => {
         if (newTask.trim() !== '') {
@@ -97,16 +97,10 @@ const TodoTemplate = (props) => {
         console.log('Tasks saved:', tasks);
     };
 
-    const getTodayDate = () => {
-        const today = new Date();
-        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-        return today.toLocaleDateString('ko-KR', options);
-    };
-
     return (
         <TodoContainer>
             <h1>{title}</h1>
-            <h2>{getTodayDate()}</h2>
+            <h2>{date}</h2>
             <InputContainer>
                 <Input
                     type="text"
