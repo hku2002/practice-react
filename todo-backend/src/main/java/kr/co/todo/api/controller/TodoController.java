@@ -4,7 +4,6 @@ import kr.co.todo.api.dto.TodoResponseDto;
 import kr.co.todo.api.service.TodoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -13,9 +12,9 @@ public class TodoController {
 
     private final TodoService todoService;
 
-    @GetMapping("/todo/{todoId}")
-    public TodoResponseDto getTasks(@PathVariable Long todoId) {
-        return todoService.getTasks(todoId);
+    @GetMapping("/todos")
+    public TodoResponseDto getTasks() {
+        return todoService.getTasks();
     }
 
 }

@@ -11,6 +11,6 @@ import java.util.List;
 public interface TaskRepository extends JpaRepository<Task, Long> {
 
     @Query("SELECT tsk FROM Task tsk JOIN FETCH tsk.todo td")
-    List<Task> findTodoAll(Long todoId);
+    List<Task> findTodoAll();
 
 }

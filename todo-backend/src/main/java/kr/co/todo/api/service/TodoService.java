@@ -14,8 +14,8 @@ public class TodoService {
 
     private final TaskRepository taskRepository;
 
-    public TodoResponseDto getTasks(Long todoId) {
-        List<Task> tasks = taskRepository.findTodoAll(todoId);
+    public TodoResponseDto getTasks() {
+        List<Task> tasks = taskRepository.findTodoAll();
         return TodoResponseDto.from(tasks);
     }
 
