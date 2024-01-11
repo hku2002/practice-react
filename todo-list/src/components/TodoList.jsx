@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import TodoTemplate from './TodoTemplate';
 
@@ -10,30 +10,88 @@ const ColumnGrid = styled.div`
 
 const TodoList = () => {
 
-    const titles = [
-        {
-            id: 1,
-            title: '첫째날 할일',
-            date: '2024년 1월 11일 목요일',
-            tasks: ["목요일 할일1", "목요일 할일2", "목요일 할일3"]
-        },
-        {
-            id: 2,
-            title: '둘째날 할일',
-            date: '2024년 1월 12일 금요일',
-            tasks: ["금요일 할일1", "금요일 할일2", "금요일 할일3"]
-        },
-        {
-            id: 3,
-            title: '셋째날 할일',
-            date: '2024년 1월 13일 토요일',
-            tasks: ["토요일 할일1", "토요일 할일2", "토요일 할일3"]
-        },
-    ];
+    // const todos = [
+    //     {
+    //         id: 1,
+    //         title: '첫째날 할일',
+    //         date: '2024년 1월 11일 목요일',
+    //         tasks: [
+    //             {
+    //                 id: 1,
+    //                 task: "task1"
+    //             },
+    //             {
+    //                 id: 2,
+    //                 task: "task2"
+    //             },
+    //             {
+    //                 id: 3,
+    //                 task: "task2"
+    //             },
+    //         ]
+    //     },
+    //     {
+    //         id: 2,
+    //         title: '둘째날 할일',
+    //         date: '2024년 1월 12일 금요일',
+    //         tasks: [
+    //             {
+    //                 id: 1,
+    //                 task: "task1"
+    //             },
+    //             {
+    //                 id: 2,
+    //                 task: "task2"
+    //             },
+    //             {
+    //                 id: 3,
+    //                 task: "task2"
+    //             },
+    //         ]
+    //     },
+    //     {
+    //         id: 3,
+    //         title: '셋째날 할일',
+    //         date: '2024년 1월 13일 토요일',
+    //         tasks: [
+    //             {
+    //                 id: 1,
+    //                 task: "task1"
+    //             },
+    //             {
+    //                 id: 2,
+    //                 task: "task2"
+    //             },
+    //             {
+    //                 id: 3,
+    //                 task: "task2"
+    //             },
+    //         ]
+    //     },
+    // ];
+
+    const apiUrl = 'http://localhost:8080/todos';
+    const [todos, setData] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch(apiUrl);
+                const jsonData = await response.json();
+                console.log("json: ", jsonData);
+                setData(jsonData);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+
+        fetchData();
+    }, []);
+    console.log("todos: ", todos);
 
     return (
         <ColumnGrid>
-            {titles.map((title) => (
+            {todos.map((title) => (
                 <TodoTemplate key={title.id} title={title.title} date={title.date} tasks={title.tasks} />
             ))}
         </ColumnGrid>
