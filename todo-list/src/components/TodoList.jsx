@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import TodoTemplate from './TodoTemplate';
 
-const TwoColumnGrid = styled.div`
+const ColumnGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 5px;
@@ -32,11 +32,11 @@ const TodoList = () => {
     ];
 
     return (
-        <TwoColumnGrid>
+        <ColumnGrid>
             {titles.map((title) => (
                 <TodoTemplate key={title.id} title={title.title} date={title.date} tasks={title.tasks} />
             ))}
-        </TwoColumnGrid>
+        </ColumnGrid>
     );
 }
 
