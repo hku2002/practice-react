@@ -75,7 +75,7 @@ const RemoveButton = styled.button`
 `;
 
 const TodoTemplate = (props) => {
-    const [tasks, setTasks] = useState([]);
+    const [tasks, setTasks] = useState(props.tasks);
     const [newTask, setNewTask] = useState('');
     const { title, date } = props;
 
