@@ -74,7 +74,7 @@ const RemoveButton = styled.button`
   cursor: pointer;
 `;
 
-const TodoList = () => {
+const TodoTemplate = () => {
     const [tasks, setTasks] = useState([]);
     const [newTask, setNewTask] = useState('');
 
@@ -127,4 +127,4 @@ const TodoList = () => {
     );
 };
 
-export default TodoList;
+export default TodoTemplate;

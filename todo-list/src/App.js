@@ -1,8 +1,8 @@
 import './App.css';
-import TodoList from "./components/TodoList";
+import TodoTemplate from "./components/TodoTemplate";
 
 const App = () => {
-  return <TodoList />;
+  return <TodoTemplate />;
 };
 
 export default App;
