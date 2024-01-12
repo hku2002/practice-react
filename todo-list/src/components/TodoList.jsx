@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import TodoTemplate from './TodoTemplate';
+import AddTodoTemplate from "./AddTodoTemplate";
 
 const ColumnGrid = styled.div`
   display: grid;
@@ -27,13 +28,13 @@ const TodoList = () => {
 
         fetchData();
     }, []);
-    console.log("todos: ", todos);
 
     return (
         <ColumnGrid>
             {todos.map((title) => (
                 <TodoTemplate key={title.id} title={title.title} date={title.date} tasks={title.tasks} />
             ))}
+            <AddTodoTemplate/>
         </ColumnGrid>
     );
 }
