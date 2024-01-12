@@ -1,13 +1,15 @@
 package kr.co.todo.api.service;
 
-import java.util.List;
+import kr.co.todo.api.domain.entity.Task;
 import kr.co.todo.api.domain.entity.Todo;
+import kr.co.todo.api.domain.repository.TaskRepository;
 import kr.co.todo.api.domain.repository.TodoRepository;
-import kr.co.todo.api.dto.AddTodoRequestDto;
-import kr.co.todo.api.dto.TodoResponseDto;
+import kr.co.todo.api.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -15,14 +17,29 @@ import org.springframework.transaction.annotation.Transactional;
 public class TodoService {
 
     private final TodoRepository todoRepository;
+    private final TaskRepository taskRepository;
 
     public List<TodoResponseDto> getTasks() {
         List<Todo> todos = todoRepository.findAll();
         return TodoResponseDto.from(todos);
     }
 
+    @Transactional
     public void addTodo(AddTodoRequestDto requestDto) {
         todoRepository.save(Todo.createInstance(requestDto));
+    }
+
+    @Transactional
+    public TaskResponseDto addTask(AddTaskRequestDto requestDto) {
+        Todo todo = todoRepository.findById(requestDto.getTodoId()).orElseThrow();
+        Task task = Task.createInstance(requestDto, todo);
+        taskRepository.save(task);
+        return TaskResponseDto.from(task);
+    }
+
+    @Transactional
+    public void deleteTask(DeleteTaskRequestDto requestDto) {
+        taskRepository.deleteById(requestDto.getTaskId());
     }
 
 }

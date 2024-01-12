@@ -1,6 +1,7 @@
 package kr.co.todo.api.domain.entity;
 
 import jakarta.persistence.*;
+import kr.co.todo.api.dto.AddTaskRequestDto;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -31,5 +32,12 @@ public class Task {
         if (!todo.getTasks().contains(this)) {
             todo.getTasks().add(this);
         }
+    }
+
+    public static Task createInstance(AddTaskRequestDto requestDto, Todo todo) {
+        return Task.builder()
+                .task(requestDto.getTask())
+                .todo(todo)
+                .build();
     }
 }
