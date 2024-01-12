@@ -19,7 +19,6 @@ const TodoList = () => {
             try {
                 const response = await fetch(apiUrl);
                 const jsonData = await response.json();
-                console.log("json: ", jsonData);
                 setData(jsonData);
             } catch (error) {
                 console.error('Error fetching data:', error);
