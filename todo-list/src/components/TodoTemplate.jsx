@@ -93,11 +93,6 @@ const TodoTemplate = (props) => {
         setTasks(updatedTasks);
     };
 
-    const saveTasks = () => {
-        // 여기에서 tasks를 저장하는 로직을 추가할 수 있습니다.
-        console.log('Tasks saved:', tasks);
-    };
-
     return (
         <TodoContainer>
             <h1>{title}</h1>
@@ -118,7 +113,6 @@ const TodoTemplate = (props) => {
                     </ListItem>
                 ))}
             </List>
-            <SaveButton onClick={saveTasks}>Save</SaveButton>
         </TodoContainer>
     );
 };
