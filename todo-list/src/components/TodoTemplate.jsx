@@ -76,12 +76,9 @@ const RemoveButton = styled.button`
 
 const TodoTemplate = (props) => {
     const { title, date } = props;
-    console.log('props.task :', props.tasks);
     const defaultTasks = props.tasks.map(task => task.task);
     const [tasks, setTasks] = useState(defaultTasks);
     const [newTask, setNewTask] = useState('');
-
-    console.log('tasts: ', tasks);
 
     const addTask = () => {
         if (newTask.trim() !== '') {
