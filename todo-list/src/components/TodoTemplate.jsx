@@ -88,7 +88,7 @@ const TodoTemplate = (props) => {
                 console.error('Server error:', response);
             }
         } catch (e) {
-
+            console.error('Network error:', e);
         }
 
         const updatedTasks = tasks.filter(task => task.id !== id);
