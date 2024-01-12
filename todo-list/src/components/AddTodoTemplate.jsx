@@ -68,6 +68,7 @@ const AddTodoTemplate = ({ props }) => {
                     setDate('');
                     setAlertMessage('성공적으로 추가되었습니다');
                     setAlertVisible(true);
+                    props();
                 } else {
                     console.error('Server error:', response);
                 }
