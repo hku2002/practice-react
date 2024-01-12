@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import TodoList from "./TodoList";
 
 const Container = styled.div`
   max-width: 400px;
