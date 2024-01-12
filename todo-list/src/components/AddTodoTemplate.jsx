@@ -51,7 +51,7 @@ const AddTodoTemplate = ({ props }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (!title && !date) {
+        if (!title || !date) {
             setAlertMessage('Title 혹은 날짜가 없습니다.');
             setAlertVisible(true);
             setAlertIsOpen(true);
