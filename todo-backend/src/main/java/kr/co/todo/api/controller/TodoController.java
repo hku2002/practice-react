@@ -29,9 +29,9 @@ public class TodoController {
         return todoService.addTask(requestDto);
     }
 
-    @DeleteMapping("/todo/task")
-    public String deleteTask(@RequestBody DeleteTaskRequestDto requestDto) {
-        todoService.deleteTask(requestDto);
+    @DeleteMapping("/todo/task/{id}")
+    public String deleteTask(@PathVariable Long id) {
+        todoService.deleteTask(id);
         return "success";
     }
 

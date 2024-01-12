@@ -38,8 +38,8 @@ public class TodoService {
     }
 
     @Transactional
-    public void deleteTask(DeleteTaskRequestDto requestDto) {
-        taskRepository.deleteById(requestDto.getTaskId());
+    public void deleteTask(Long id) {
+        taskRepository.deleteById(id);
     }
 
 }
