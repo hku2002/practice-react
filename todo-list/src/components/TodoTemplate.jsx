@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import CustomAlert from "../common/components/CustomAlert";
 import styled from 'styled-components';
 
 const TodoContainer = styled.div`
@@ -60,16 +61,45 @@ const RemoveButton = styled.button`
 `;
 
 const TodoTemplate = (props) => {
-    const { title, date } = props;
+    const { todoId, title, date } = props;
     const [tasks, setTasks] = useState(props.tasks);
     const [newTask, setNewTask] = useState('');
+    const [alertVisible, setAlertVisible] = useState(false);
+    const [alertMessage, setAlertMessage] = useState('');
     const apiUrl = 'http://localhost:8080';
 
-    const addTask = () => {
-        if (newTask.trim() !== '') {
-            setTasks([...tasks, newTask]);
-            setNewTask('');
+    const handleAlertClose = () => {
+        setAlertVisible(false);
+    };
+
+    const addTask = async (todoId, task) => {
+        if (task.trim() === '') {
+            setAlertMessage('입력된 값이 없습니다.');
+            setAlertVisible(true);
+            return;
         }
+
+        const addUrl = apiUrl + "/todo/task";
+        try {
+            const response = await fetch(addUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ todoId, task }),
+            });
+
+            if (response.ok) {
+                const responseData = await response.json();
+                setTasks([...tasks, responseData]);
+                setNewTask('');
+            } else {
+                console.error('Server error:', response);
+            }
+        } catch (e) {
+            console.error("Network error: ", e);
+        }
+
     };
 
     const removeTask = async (id) => {
@@ -104,7 +134,7 @@ const TodoTemplate = (props) => {
                     value={newTask}
                     onChange={(e) => setNewTask(e.target.value)}
                 />
-                <AddButton onClick={addTask}>Add Task</AddButton>
+                <AddButton onClick={() => addTask(todoId, newTask)}>Add Task</AddButton>
             </InputContainer>
             <List>
                 {tasks.map((task, index) => (
@@ -114,6 +144,7 @@ const TodoTemplate = (props) => {
                     </ListItem>
                 ))}
             </List>
+            {alertVisible && <CustomAlert message={alertMessage} onClose={handleAlertClose} />}
         </TodoContainer>
     );
 };
