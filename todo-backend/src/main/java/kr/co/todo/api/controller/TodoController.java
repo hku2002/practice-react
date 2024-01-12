@@ -1,5 +1,6 @@
 package kr.co.todo.api.controller;
 
+import java.util.List;
 import kr.co.todo.api.dto.TodoResponseDto;
 import kr.co.todo.api.service.TodoService;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +14,7 @@ public class TodoController {
     private final TodoService todoService;
 
     @GetMapping("/todos")
-    public TodoResponseDto getTasks() {
+    public List<TodoResponseDto> getTasks() {
         return todoService.getTasks();
     }
 

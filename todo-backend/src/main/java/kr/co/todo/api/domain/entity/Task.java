@@ -15,7 +15,8 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String task;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "todo_id", referencedColumnName = "id", updatable = false)
     private Todo todo;
 
     @Builder
@@ -23,5 +24,12 @@ public class Task {
         this.id = id;
         this.task = task;
         this.todo = todo;
+    }
+
+    public void addTodo(Todo todo) {
+        this.todo = todo;
+        if (!todo.getTasks().contains(this)) {
+            todo.getTasks().add(this);
+        }
     }
 }

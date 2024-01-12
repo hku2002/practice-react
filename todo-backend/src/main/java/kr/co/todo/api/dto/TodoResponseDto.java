@@ -1,6 +1,7 @@
 package kr.co.todo.api.dto;
 
 import kr.co.todo.api.domain.entity.Task;
+import kr.co.todo.api.domain.entity.Todo;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -23,15 +24,20 @@ public class TodoResponseDto {
         this.tasks = tasks;
     }
 
-    public static TodoResponseDto from(List<Task> tasks) {
-        if (tasks.isEmpty()) {
-            return TodoResponseDto.builder().build();
-        }
+    public static TodoResponseDto from(Todo todo) {
         return TodoResponseDto.builder()
-                .id(tasks.get(0).getTodo().getId())
-                .title(tasks.get(0).getTodo().getTitle())
-                .date(tasks.get(0).getTodo().getDate())
-                .tasks(TaskResponseDto.from(tasks))
-                .build();
+            .id(todo.getId())
+            .title(todo.getTitle())
+            .date(todo.getDate())
+            .tasks(todo.getTasks().stream()
+                .map(TaskResponseDto::from)
+                .toList())
+            .build();
+    }
+
+    public static List<TodoResponseDto> from(List<Todo> todo) {
+        return todo.stream()
+            .map(TodoResponseDto::from)
+            .toList();
     }
 }
