@@ -35,21 +35,6 @@ const AddButton = styled.button`
   }
 `;
 
-const SaveButton = styled.button`
-  margin-top: 10px;
-  padding: 10px;
-  cursor: pointer;
-  background-color: #3498db;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  transition: background-color 0.3s;
-
-  &:hover {
-    background-color: #2980b9;
-  }
-`;
-
 const List = styled.ul`
   list-style-type: none;
   padding: 0;
