@@ -65,6 +65,7 @@ const TodoTemplate = (props) => {
     const [tasks, setTasks] = useState(props.tasks);
     const [newTask, setNewTask] = useState('');
     const [alertVisible, setAlertVisible] = useState(false);
+    const [alertIsOpen, setAlertIsOpen] = useState(false);
     const [alertMessage, setAlertMessage] = useState('');
     const apiUrl = 'http://localhost:8080';
 
@@ -76,6 +77,7 @@ const TodoTemplate = (props) => {
         if (task.trim() === '') {
             setAlertMessage('입력된 값이 없습니다.');
             setAlertVisible(true);
+            setAlertIsOpen(true);
             return;
         }
 
@@ -144,7 +146,7 @@ const TodoTemplate = (props) => {
                     </ListItem>
                 ))}
             </List>
-            {alertVisible && <CustomAlert message={alertMessage} onClose={handleAlertClose} />}
+            {alertVisible && <CustomAlert message={alertMessage} isOpen={alertIsOpen} onClose={handleAlertClose} />}
         </TodoContainer>
     );
 };

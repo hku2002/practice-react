@@ -41,6 +41,7 @@ const AddTodoTemplate = ({ props }) => {
     const [title, setTitle] = useState('');
     const [date, setDate] = useState('');
     const [alertVisible, setAlertVisible] = useState(false);
+    const [alertIsOpen, setAlertIsOpen] = useState(false);
     const [alertMessage, setAlertMessage] = useState('');
 
     const handleAlertClose = () => {
@@ -53,6 +54,7 @@ const AddTodoTemplate = ({ props }) => {
         if (!title && !date) {
             setAlertMessage('Title 혹은 날짜가 없습니다.');
             setAlertVisible(true);
+            setAlertIsOpen(true);
         } else {
             try {
                 const response = await fetch('http://localhost:8080/todo', {
@@ -97,7 +99,7 @@ const AddTodoTemplate = ({ props }) => {
                 />
                 <Button type="submit">Add Todo</Button>
             </Form>
-            {alertVisible && <CustomAlert message={alertMessage} onClose={handleAlertClose} />}
+            {alertVisible && <CustomAlert message={alertMessage} isOpen={alertIsOpen} onClose={handleAlertClose} />}
         </Container>
     );
 };
