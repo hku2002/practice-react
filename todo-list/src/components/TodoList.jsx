@@ -30,8 +30,8 @@ const TodoList = () => {
 
     return (
         <ColumnGrid>
-            {todos.map((title) => (
-                <TodoTemplate key={title.id} title={title.title} date={title.date} tasks={title.tasks} />
+            {todos.map((todo) => (
+                <TodoTemplate key={todo.id} title={todo.title} date={todo.date} tasks={todo.tasks} />
             ))}
             <AddTodoTemplate props={fetchData}/>
         </ColumnGrid>

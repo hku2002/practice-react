@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components';
 
 const TodoContainer = styled.div`
@@ -61,9 +61,9 @@ const RemoveButton = styled.button`
 
 const TodoTemplate = (props) => {
     const { title, date } = props;
-    const defaultTasks = props.tasks.map(task => task.task);
-    const [tasks, setTasks] = useState(defaultTasks);
+    const [tasks, setTasks] = useState(props.tasks);
     const [newTask, setNewTask] = useState('');
+    const apiUrl = 'http://localhost:8080';
 
     const addTask = () => {
         if (newTask.trim() !== '') {
@@ -72,10 +72,28 @@ const TodoTemplate = (props) => {
         }
     };
 
-    const removeTask = (index) => {
-        const updatedTasks = [...tasks];
-        updatedTasks.splice(index, 1);
+    const removeTask = async (id) => {
+        const removeUrl = apiUrl + "/todo/task/" + id;
+        try {
+            const response = await fetch(removeUrl, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (response.ok) {
+
+            } else {
+                console.error('Server error:', response);
+            }
+        } catch (e) {
+
+        }
+
+        const updatedTasks = tasks.filter(task => task.id !== id);
         setTasks(updatedTasks);
+
     };
 
     return (
@@ -92,9 +110,9 @@ const TodoTemplate = (props) => {
             </InputContainer>
             <List>
                 {tasks.map((task, index) => (
-                    <ListItem key={index}>
-                        {task}
-                        <RemoveButton onClick={() => removeTask(index)}>Remove</RemoveButton>
+                    <ListItem key={task.id}>
+                        {task.task}
+                        <RemoveButton onClick={() => removeTask(task.id)}>Remove</RemoveButton>
                     </ListItem>
                 ))}
             </List>
