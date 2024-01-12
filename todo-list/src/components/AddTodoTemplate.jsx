@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import CustomAlert from "../common/components/CustomAlert";
 
 const Container = styled.div`
   max-width: 400px;
@@ -39,11 +40,19 @@ const Button = styled.button`
 const AddTodoTemplate = ({ props }) => {
     const [title, setTitle] = useState('');
     const [date, setDate] = useState('');
+    const [alertVisible, setAlertVisible] = useState(false);
+    const [alertMessage, setAlertMessage] = useState('');
+
+    const handleAlertClose = () => {
+        setAlertVisible(false);
+    };
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!title && !date) {
-            alert('Please fill in all fields');
+            setAlertMessage('Title 혹은 날짜가 없습니다.');
+            setAlertVisible(true);
         } else {
             try {
                 const response = await fetch('http://localhost:8080/todo', {
@@ -55,14 +64,17 @@ const AddTodoTemplate = ({ props }) => {
                 });
 
                 if (response.ok) {
-                    alert("등록 성공");
                     setTitle('');
                     setDate('');
+                    setAlertMessage('성공적으로 추가되었습니다');
+                    setAlertVisible(true);
                 } else {
                     console.error('Server error:', response);
                 }
             } catch (error) {
                 // 네트워크 오류 처리
+                setAlertMessage('네트워크 오류');
+                setAlertVisible(true);
                 console.error('Network error:', error);
             }
         }
@@ -84,6 +96,7 @@ const AddTodoTemplate = ({ props }) => {
                 />
                 <Button type="submit">Add Todo</Button>
             </Form>
+            {alertVisible && <CustomAlert message={alertMessage} onClose={handleAlertClose} />}
         </Container>
     );
 };
