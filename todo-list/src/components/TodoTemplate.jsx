@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import CustomAlert from "../common/components/CustomAlert";
 import styled from 'styled-components';
 
@@ -9,6 +9,24 @@ const TodoContainer = styled.div`
   border: 1px solid #ddd;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+`;
+
+const CloseButton = styled.button`
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 35px;
+  height: 35px;
+  background-color: transparent;
+  color: #555;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
 `;
 
 const InputContainer = styled.div`
@@ -165,8 +183,29 @@ const TodoTemplate = (props) => {
 
     };
 
+    const removeTodo = async (id) => {
+        const removeUrl = `${apiUrl}/todo/${id}`;
+        try {
+            const response = await fetch(removeUrl, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (response.ok) {
+                props.onRemoveTodo(id);
+            } else {
+                console.error('Server error:', response);
+            }
+        } catch (e) {
+            console.error('Network error:', e);
+        }
+    }
+
     return (
         <TodoContainer>
+            <CloseButton onClick={() => removeTodo(todoId)}>X</CloseButton>
             <h1>{title}</h1>
             <h2>{date}</h2>
             <InputContainer>

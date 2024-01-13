@@ -29,6 +29,11 @@ const TodoList = () => {
         fetchData();
     }, [fetchData]);
 
+    const removeTodo = (todoId) => {
+        const updatedTodos = todos.filter(todo => todo.id !== todoId);
+        setData(updatedTodos);
+    };
+
     return (
         <ColumnGrid>
             {todos.map((todo) => (
@@ -38,9 +43,10 @@ const TodoList = () => {
                     title={todo.title}
                     date={todo.date}
                     tasks={todo.tasks}
-                    Completed={todo.completed}/>
+                    completed={todo.completed}
+                    onRemoveTodo={removeTodo} />
             ))}
-            <AddTodoTemplate props={fetchData}/>
+            <AddTodoTemplate props={fetchData} />
         </ColumnGrid>
     );
 }
