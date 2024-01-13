@@ -16,14 +16,16 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String task;
+    private boolean isCompleted;
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "todo_id", referencedColumnName = "id", updatable = false)
     private Todo todo;
 
     @Builder
-    public Task(Long id, String task, Todo todo) {
+    public Task(Long id, String task, boolean isCompleted, Todo todo) {
         this.id = id;
         this.task = task;
+        this.isCompleted = isCompleted;
         this.todo = todo;
     }
 
@@ -37,6 +39,7 @@ public class Task {
     public static Task createInstance(AddTaskRequestDto requestDto, Todo todo) {
         return Task.builder()
                 .task(requestDto.getTask())
+                .isCompleted(false)
                 .todo(todo)
                 .build();
     }
