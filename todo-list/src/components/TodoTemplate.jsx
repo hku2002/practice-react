@@ -60,6 +60,10 @@ const RemoveButton = styled.button`
   cursor: pointer;
 `;
 
+const Checkbox = styled.input`
+  margin-right: 5px;
+`;
+
 const TodoTemplate = (props) => {
     const { todoId, title, date } = props;
     const [tasks, setTasks] = useState(props.tasks);
@@ -77,6 +81,34 @@ const TodoTemplate = (props) => {
         if (e.key === 'Enter') {
             e.preventDefault();
             addTask(todoId, newTask);
+        }
+    };
+
+    const handleCheckboxChange = async (taskId, completed) => {
+        const updateUrl = `${apiUrl}/todo/task`;
+        try {
+            const response = await fetch(updateUrl, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ taskId, completed }),
+            });
+
+            if (response.ok) {
+                const updatedTasks = tasks.map(task => {
+                    if (task.id === taskId) {
+                        return { ...task, completed };
+                    }
+                    return task;
+                });
+
+                setTasks(updatedTasks);
+            } else {
+                console.error('Server error:', response);
+            }
+        } catch (e) {
+            console.error('Network error:', e);
         }
     };
 
@@ -149,6 +181,10 @@ const TodoTemplate = (props) => {
             <List>
                 {tasks.map((task, index) => (
                     <ListItem key={task.id}>
+                        <Checkbox
+                            type="checkbox"
+                            defaultChecked={task.completed}
+                            onChange={(e) => handleCheckboxChange(task.id, e.target.checked)} />
                         {task.task}
                         <RemoveButton onClick={() => removeTask(task.id)}>Remove</RemoveButton>
                     </ListItem>

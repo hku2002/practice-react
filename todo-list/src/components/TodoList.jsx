@@ -37,7 +37,8 @@ const TodoList = () => {
                     todoId={todo.id}
                     title={todo.title}
                     date={todo.date}
-                    tasks={todo.tasks} />
+                    tasks={todo.tasks}
+                    Completed={todo.completed}/>
             ))}
             <AddTodoTemplate props={fetchData}/>
         </ColumnGrid>
