@@ -88,7 +88,7 @@ const TodoTemplate = (props) => {
             return;
         }
 
-        const addUrl = apiUrl + "/todo/task";
+        const addUrl = `${apiUrl}/todo/task`;
         try {
             const response = await fetch(addUrl, {
                 method: 'POST',
@@ -112,7 +112,7 @@ const TodoTemplate = (props) => {
     };
 
     const removeTask = async (id) => {
-        const removeUrl = apiUrl + "/todo/task/" + id;
+        const removeUrl = `${apiUrl}/todo/task/${id}`;
         try {
             const response = await fetch(removeUrl, {
                 method: 'DELETE',
