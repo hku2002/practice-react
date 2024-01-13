@@ -179,7 +179,7 @@ const TodoTemplate = (props) => {
                 <AddButton onClick={() => addTask(todoId, newTask)}>Add Task</AddButton>
             </InputContainer>
             <List>
-                {tasks.map((task, index) => (
+                {tasks.map((task) => (
                     <ListItem key={task.id}>
                         <Checkbox
                             type="checkbox"
