@@ -37,10 +37,14 @@ public class Task {
     }
 
     public static Task createInstance(AddTaskRequestDto requestDto, Todo todo) {
-        return Task.builder()
+        return kr.co.todo.api.domain.entity.Task.builder()
                 .task(requestDto.getTask())
                 .isCompleted(false)
                 .todo(todo)
                 .build();
+    }
+
+    public void changeCompleted(boolean isCompleted) {
+        this.isCompleted = isCompleted;
     }
 }

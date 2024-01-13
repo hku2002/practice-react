@@ -8,6 +8,7 @@ import kr.co.todo.api.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -35,6 +36,12 @@ public class TodoService {
         Task task = Task.createInstance(requestDto, todo);
         taskRepository.save(task);
         return TaskResponseDto.from(task);
+    }
+
+    @Transactional
+    public void changeCompleted(@RequestBody ChangeCompletedRequestDto requestDto) {
+        Task task = taskRepository.findById(requestDto.getTaskId()).orElseThrow();
+        task.changeCompleted(requestDto.isCompleted());
     }
 
     @Transactional

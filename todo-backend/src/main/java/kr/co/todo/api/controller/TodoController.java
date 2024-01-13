@@ -25,8 +25,14 @@ public class TodoController {
     }
 
     @PostMapping("/todo/task")
-    public TaskResponseDto addTask(@RequestBody AddTaskRequestDto requestDto) {
+    public TaskResponseDto addTask(AddTaskRequestDto requestDto) {
         return todoService.addTask(requestDto);
+    }
+
+    @PatchMapping("/todo/task")
+    public String changeCompleted(@RequestBody ChangeCompletedRequestDto requestDto) {
+        todoService.changeCompleted(requestDto);
+        return "success";
     }
 
     @DeleteMapping("/todo/task/{id}")
