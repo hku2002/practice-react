@@ -1,6 +1,6 @@
-INSERT INTO todo (title, date) VALUES ('첫째날 할일', '2024-01-01 00:00:01');
-INSERT INTO todo (title, date) VALUES ('둘째날 할일', '2024-01-02 00:00:01');
-INSERT INTO todo (title, date) VALUES ('셋째날 할일', '2024-01-03 00:00:01');
+INSERT INTO todo (title, date) VALUES ('첫째날 할일', '2024-01-01');
+INSERT INTO todo (title, date) VALUES ('둘째날 할일', '2024-01-02');
+INSERT INTO todo (title, date) VALUES ('셋째날 할일', '2024-01-03');
 
 INSERT INTO task (task, todo_id) VALUES ('Complete homework', 1);
 INSERT INTO task (task, todo_id) VALUES ('Buy groceries', 1);
