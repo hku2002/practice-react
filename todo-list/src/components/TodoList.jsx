@@ -5,7 +5,7 @@ import AddTodoTemplate from "./AddTodoTemplate";
 
 const ColumnGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, 300px); /* 각 TodoTemplate의 너비를 400px로 설정 */
+  grid-template-columns: repeat(3, 300px);
   gap: 10px;
   justify-content: center;
 `;
