@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import CustomAlert from "../common/components/CustomAlert";
 
 const Container = styled.div`
-  max-width: 400px;
+  width: 250px;
   margin: auto;
   padding: 20px;
   border: 1px solid #ddd;
@@ -12,6 +12,7 @@ const Container = styled.div`
 `;
 
 const Form = styled.form`
+  width: 250px;
   display: flex;
   flex-direction: column;
   gap: 10px;

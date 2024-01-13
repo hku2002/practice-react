@@ -3,7 +3,7 @@ import CustomAlert from "../common/components/CustomAlert";
 import styled from 'styled-components';
 
 const TodoContainer = styled.div`
-  max-width: 400px;
+  width: 250px;
   margin: auto;
   padding: 20px;
   border: 1px solid #ddd;

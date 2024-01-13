@@ -5,8 +5,9 @@ import AddTodoTemplate from "./AddTodoTemplate";
 
 const ColumnGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 5px;
+  grid-template-columns: repeat(3, 300px); /* 각 TodoTemplate의 너비를 400px로 설정 */
+  gap: 10px;
+  justify-content: center;
 `;
 
 const TodoList = () => {
