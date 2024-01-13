@@ -73,6 +73,13 @@ const TodoTemplate = (props) => {
         setAlertVisible(false);
     };
 
+    const handleKeyDown = (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            addTask(todoId, newTask);
+        }
+    };
+
     const addTask = async (todoId, task) => {
         if (task.trim() === '') {
             setAlertMessage('입력된 값이 없습니다.');
@@ -135,6 +142,7 @@ const TodoTemplate = (props) => {
                     type="text"
                     value={newTask}
                     onChange={(e) => setNewTask(e.target.value)}
+                    onKeyDown={handleKeyDown}
                 />
                 <AddButton onClick={() => addTask(todoId, newTask)}>Add Task</AddButton>
             </InputContainer>
