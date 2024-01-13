@@ -31,6 +31,12 @@ public class TodoService {
     }
 
     @Transactional
+    public void deleteTodo(Long id) {
+        taskRepository.deleteAllByTodoId(id);
+        todoRepository.deleteById(id);
+    }
+
+    @Transactional
     public TaskResponseDto addTask(AddTaskRequestDto requestDto) {
         Todo todo = todoRepository.findById(requestDto.getTodoId()).orElseThrow();
         Task task = Task.createInstance(requestDto, todo);
