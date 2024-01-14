@@ -19,13 +19,15 @@ public class Product {
     private Long id;
     private String productName;
     private int price;
+    private Integer discountPrice;
     private String thumbnailImagePath;
 
     @Builder
-    public Product(Long id, String productName, int price, String thumbnailImagePath) {
+    public Product(Long id, String productName, int price, Integer discountPrice, String thumbnailImagePath) {
         this.id = id;
         this.productName = productName;
         this.price = price;
+        this.discountPrice = discountPrice;
         this.thumbnailImagePath = thumbnailImagePath;
     }
 }
