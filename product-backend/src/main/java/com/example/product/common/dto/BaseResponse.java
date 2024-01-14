@@ -1,5 +1,8 @@
 package com.example.product.common.dto;
 
+import lombok.Getter;
+
+@Getter
 public class BaseResponse<T> {
 
     private final String status;
