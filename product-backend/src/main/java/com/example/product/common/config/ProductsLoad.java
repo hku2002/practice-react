@@ -21,16 +21,20 @@ public class ProductsLoad implements ApplicationRunner {
     public void run(ApplicationArguments args) {
         List<Product> products = new ArrayList<>();
         for (int i = 0; i < 10_000; i++) {
-            int min1 = 5000;
-            int max1 = 30000;
-            int min2 = 1000;
-            int max2 = 4000;
+            int priceMin = 20000;
+            int priceMax = 30000;
+            int discountPriceMin = 15000;
+            int discountPriceMax = 25000;
             Random random = new Random();
 
-            int price = random.nextInt((max1 - min1) + 1) + min1;
+            int price = random.nextInt((priceMax - priceMin) + 1) + priceMin;
 
             Integer discountPrice = random.nextDouble() < 0.7 ?
-                    random.nextInt((max2 - min2) + 1) + min2 : null;
+                    random.nextInt((discountPriceMax - discountPriceMin) + 1) + discountPriceMin : null;
+
+            if (discountPrice != null && price < discountPrice) {
+                discountPrice = price - 3000;
+            }
 
             Product product = Product.builder()
                     .productName("상품명 " + i)
