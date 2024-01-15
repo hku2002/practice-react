@@ -64,8 +64,8 @@ const ProductList = (callback, deps) => {
 
     return (
         <ProductListContainer>
-            {products.map((product, index) => (
-                <ProductComponent key={index} {...product} />
+            {products.map((product) => (
+                <ProductComponent key={product.id} {...product} />
             ))}
             {loading && <p>Loading...</p>}
         </ProductListContainer>
