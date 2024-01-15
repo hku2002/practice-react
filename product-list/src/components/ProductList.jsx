@@ -22,7 +22,12 @@ const ProductList = () => {
     const apiUrl = "http://localhost:8080/products";
 
     const fetchProducts = useCallback(async (page, size) => {
-        const response = await fetch(apiUrl);
+
+        const url = new URL(apiUrl);
+        url.searchParams.append('page', page);
+        url.searchParams.append('size', size);
+
+        const response = await fetch(url.toString());
         const jsonData = await response.json();
         console.log(jsonData);
         setProduct(jsonData.data.content);
