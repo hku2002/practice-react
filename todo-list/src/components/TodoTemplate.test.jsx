@@ -3,8 +3,8 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import TodoTemplate from './TodoTemplate';
 
-describe('TodoTemplate Component', () => {
-    it('renders todo template with tasks', async () => {
+describe('TodoTemplate Component Test', () => {
+    it('TodoTemplate이 올바르게 렌더링 된다.', async () => {
         render(
             <TodoTemplate
                 todoId={1}
