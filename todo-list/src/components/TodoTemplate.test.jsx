@@ -4,17 +4,20 @@ import '@testing-library/jest-dom/extend-expect';
 import TodoTemplate from './TodoTemplate';
 
 describe('TodoTemplate Component Test', () => {
+
+    const props = {
+        todoId: 1,
+        title: 'Sample Todo',
+        date: '2022-01-01',
+        tasks: [
+            { id: 1, task: 'Task 1', completed: false },
+            { id: 2, task: 'Task 2', completed: true },
+        ]
+    };
+
     it('TodoTemplate이 올바르게 렌더링 된다.', async () => {
         render(
-            <TodoTemplate
-                todoId={1}
-                title="Sample Todo"
-                date="2022-01-01"
-                tasks={[
-                    { id: 1, task: 'Task 1', completed: false },
-                    { id: 2, task: 'Task 2', completed: true },
-                ]}
-            />
+            <TodoTemplate {...props} />
         );
 
         // TodoTemplate이 렌더링되었는지 확인
@@ -28,15 +31,7 @@ describe('TodoTemplate Component Test', () => {
 
     it('Add Task 버튼 클릭 시 추가된 Task가 올바르게 렌더링 된다.', async () => {
         render(
-            <TodoTemplate
-                todoId={1}
-                title="Sample Todo"
-                date="2022-01-01"
-                tasks={[
-                    { id: 1, task: 'Task 1', completed: false },
-                    { id: 2, task: 'Task 2', completed: true },
-                ]}
-            />
+            <TodoTemplate {...props} />
         );
 
         // 새로운 Task 추가
@@ -49,15 +44,7 @@ describe('TodoTemplate Component Test', () => {
 
     it('Add Task 버튼 클릭 시 task 데이터가 없으면 alert 메세지가 발생한다.', async () => {
         render(
-            <TodoTemplate
-                todoId={1}
-                title="Sample Todo"
-                date="2022-01-01"
-                tasks={[
-                    { id: 1, task: 'Task 1', completed: false },
-                    { id: 2, task: 'Task 2', completed: true },
-                ]}
-            />
+            <TodoTemplate {...props} />
         );
 
         // task 입력 없이 Add Task 클릭
