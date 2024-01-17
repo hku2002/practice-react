@@ -1,7 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
-const CardContainer = styled.div`
+const CardContainer = styled(Link)`
+  text-decoration: none;
+  color: inherit;
   width: 200px;
   height: 280px;
   margin-top: 5px;
@@ -55,7 +58,7 @@ const DiscountRate = styled.span`
 
 const ProductComponent = ({ productName, price, discountPrice }) => {
     return (
-        <CardContainer>
+        <CardContainer to={'/product/detail'}>
             <Thumbnail src="/thumbnail_image_sample.jpeg" alt={productName} />
             <ProductInfo>
                 <ProductName>{productName}</ProductName>
