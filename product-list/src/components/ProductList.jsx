@@ -1,4 +1,5 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import {useEffect, Fragment, useCallback} from 'react';
+import { useInfiniteQuery } from 'react-query';
 import styled from 'styled-components';
 import ProductComponent from './ProductComponent';
 
@@ -9,65 +10,65 @@ const ProductListContainer = styled.div`
   justify-content: center;
 `;
 
-const ProductList = (callback, deps) => {
-
-    const [products, setProducts] = useState([]);
-    const [page, setPage] = useState(0);
-    const [loading, setLoading] = useState(false);
+const ProductList = () => {
     const apiUrl = "http://localhost:8080/products";
     const size = 10;
 
-
-    const fetchProducts = useCallback(async (page, size) => {
+    const fetchProducts = async (page = 0) => {
         const url = new URL(apiUrl);
         url.searchParams.append('page', page);
         url.searchParams.append('size', size);
 
         const response = await fetch(url.toString());
         const jsonData = await response.json();
-        return jsonData.data.content;
-    }, [apiUrl]);
+        return { items: jsonData.data.content, nextPage: page + 1, totalPages: jsonData.data.totalPages };
+    };
 
-    const loadMore = useCallback(async () => {
-        if (loading) return;
-        setLoading(true);
-
-        try {
-            const newProducts = await fetchProducts(page + 1, size);
-            setProducts((prevProducts) => [...prevProducts, ...newProducts]);
-            setPage(page + 1);
-        } catch (error) {
-            console.error("Error fetching more products:", error);
-        } finally {
-            setLoading(false);
+    const {
+        data,
+        fetchNextPage,
+        hasNextPage,
+        isFetchingNextPage,
+        status
+    } = useInfiniteQuery('products', ({ pageParam = 0 }) => fetchProducts(pageParam), {
+        getNextPageParam: (lastPage, allPages) => {
+            const nextPage = allPages.length;
+            return nextPage < lastPage.totalPages ? nextPage : undefined;
         }
-    }, [loading, fetchProducts, page, size]);
+    });
 
     const handleScroll = useCallback(async () => {
         if (
             window.innerHeight + document.documentElement.scrollTop ===
             document.documentElement.offsetHeight
         ) {
-            await loadMore();
+            if (hasNextPage) await fetchNextPage();
         }
-    }, [loadMore]);
-
-
-    useEffect(() => {
-        fetchProducts(0, size).then((initialProducts) => setProducts(initialProducts));
-    }, [fetchProducts, size]);
+    }, [hasNextPage, fetchNextPage]);
 
     useEffect(() => {
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, [handleScroll]);
 
+    if (status === 'loading') {
+        return <span>Loading...</span>;
+    }
+
+    if (status === 'error') {
+        return <span>Error loading products</span>;
+    }
+
     return (
         <ProductListContainer>
-            {products.map((product) => (
-                <ProductComponent key={product.id} {...product} />
+            {data?.pages.map((group, i) => (
+                <Fragment key={i}>
+                    {group.items.map(product => (
+                        <ProductComponent key={product.id} {...product} />
+                    ))}
+                </Fragment>
             ))}
-            {loading && <p>Loading...</p>}
+            {isFetchingNextPage && <p>Loading more...</p>}
         </ProductListContainer>
     );
 };
