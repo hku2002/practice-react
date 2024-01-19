@@ -38,7 +38,7 @@ const Button = styled.button`
   }
 `;
 
-const AddTodoCard = ({ props }) => {
+const AddTodoCard = ({ fetchData }) => {
     const [title, setTitle] = useState('');
     const [date, setDate] = useState('');
     const [alertVisible, setAlertVisible] = useState(false);
@@ -71,7 +71,8 @@ const AddTodoCard = ({ props }) => {
                     setDate('');
                     setAlertMessage('성공적으로 추가되었습니다');
                     setAlertVisible(true);
-                    props();
+                    setAlertIsOpen(true);
+                    fetchData();
                 } else {
                     console.error('Server error:', response);
                 }

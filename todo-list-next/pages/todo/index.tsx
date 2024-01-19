@@ -1,54 +1,39 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import styled from 'styled-components';
-import TodoCard from '../../components/todo/TodoCard';
-import AddTodoCard from "../../components/todo/AddTodoCard";
+// pages/index.js
+import TodoList from '../../components/todo/TodoList';
+import Head from 'next/head';
 
-const ColumnGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, 300px);
-  gap: 10px;
-  justify-content: center;
-`;
-
-const TodoList = () => {
-
-    const apiUrl = 'http://localhost:8080/todos';
-    const [todos, setData] = useState([]);
-
-    const fetchData = useCallback(async () => {
-        try {
-            const response = await fetch(apiUrl);
-            const jsonData = await response.json();
-            setData(jsonData);
-        } catch (error) {
-            console.error('Error fetching data:', error);
-        }
-    }, [apiUrl]);
-
-    useEffect(() => {
-        fetchData();
-    }, [fetchData]);
-
-    const removeTodo = (todoId) => {
-        const updatedTodos = todos.filter(todo => todo.id !== todoId);
-        setData(updatedTodos);
-    };
-
+const Home = ({ initialData }) => {
     return (
-        <ColumnGrid>
-            {todos.map((todo) => (
-                <TodoCard
-                    key={todo.id}
-                    todoId={todo.id}
-                    title={todo.title}
-                    date={todo.date}
-                    tasks={todo.tasks}
-                    completed={todo.completed}
-                    onRemoveTodo={removeTodo} />
-            ))}
-            <AddTodoCard props={fetchData} />
-        </ColumnGrid>
+        <>
+            <Head>
+                <title>Todo List</title>
+            </Head>
+            <TodoList initialData={initialData} />
+        </>
     );
+};
+
+export async function getServerSideProps() {
+    const apiUrl = 'http://localhost:8080/todos';
+    try {
+        const response = await fetch(apiUrl);
+        const initialData = await response.json();
+        const isServer = true;
+
+        return {
+            props: {
+                initialData,
+                isServer,
+            },
+        };
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        return {
+            props: {
+                initialData: [],
+            },
+        };
+    }
 }
 
-export default TodoList
+export default Home;
