@@ -20,7 +20,8 @@ public class TodoService {
     private final TodoRepository todoRepository;
     private final TaskRepository taskRepository;
 
-    public List<TodoResponseDto> getTasks() {
+    public List<TodoResponseDto> getTasks() throws InterruptedException {
+        Thread.sleep(2000L);
         List<Todo> todos = todoRepository.findAll();
         return TodoResponseDto.from(todos);
     }

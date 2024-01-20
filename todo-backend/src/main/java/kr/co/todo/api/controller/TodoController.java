@@ -14,7 +14,7 @@ public class TodoController {
     private final TodoService todoService;
 
     @GetMapping("/todos")
-    public List<TodoResponseDto> getTasks() {
+    public List<TodoResponseDto> getTasks() throws InterruptedException {
         return todoService.getTasks();
     }
 
