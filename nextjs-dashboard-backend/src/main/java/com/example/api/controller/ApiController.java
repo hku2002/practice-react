@@ -1,4 +1,4 @@
-package com.example.api;
+package com.example.api.controller;
 
 import com.example.api.domain.entity.Customer;
 import com.example.api.domain.entity.Invoice;
