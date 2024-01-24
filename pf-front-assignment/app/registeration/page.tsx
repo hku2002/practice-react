@@ -1,21 +1,92 @@
 'use client'
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
+import CustomModal from "@/common/ui/custom.modal";
 
 const RegistrationForm = () => {
     // 년도와 월을 위한 데이터 생성
     const years = Array.from({ length: 101 }, (_, i) => new Date().getFullYear() - i);
     const months = Array.from({ length: 12 }, (_, i) => i + 1);
 
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [modalContent, setModalContent] = useState('');
+    const [focusTarget, setFocusTarget] = useState('');
+
     const [email, setEmail] = useState('');
+    const [password1, setPassword1] = useState('');
+    const [password2, setPassword2] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
+
+    const emailRef = useRef(null);
+    const password1Ref = useRef(null);
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+        if (focusTarget === 'email') {
+            emailRef.current.focus();
+        } else if (focusTarget === 'password1') {
+            password1Ref.current.focus();
+        }
+
+        setFocusTarget('');
+    };
 
     const handleEmailChange = (event) => {
         setEmail(event.target.value);
     };
+    const handlePassword1Change = (event) => {
+        setPassword1(event.target.value);
+    };
+    const handlePassword2Change = (event) => {
+        setPassword2(event.target.value);
+    };
+
+    const handlePhoneNumberChange = (event) => {
+        const { value } = event.target;
+        const onlyNumbers = value.replace(/[^\d]/g, '');
+
+        if (onlyNumbers.length <= 3) {
+            setPhoneNumber(onlyNumbers);
+        } else if (onlyNumbers.length <= 7) {
+            setPhoneNumber(`${onlyNumbers.slice(0, 3)}-${onlyNumbers.slice(3)}`);
+        } else {
+            setPhoneNumber(`${onlyNumbers.slice(0, 3)}-${onlyNumbers.slice(3, 7)}-${onlyNumbers.slice(7, 11)}`);
+        }
+    };
+
     const handleSubmit = (event) => {
         event.preventDefault();
         if (!email.trim()) {
-            alert('이메일을 입력해주세요.');
+            setModalContent('이메일을 입력해주세요.');
+            setIsModalOpen(true);
+            setFocusTarget('email');
             return;
+        }
+
+        if (!password1.trim()) {
+            setModalContent('비밀번호를 입력해주세요.');
+            setIsModalOpen(true);
+            setFocusTarget('password1');
+            return;
+        }
+
+        if (password1.trim() !== password2.trim()) {
+            setModalContent('비밀번호가 일치하지 않아요.');
+            setIsModalOpen(true);
+            setFocusTarget('password1');
+            return;
+        }
+
+        if (!phoneNumber.trim()) {
+            setModalContent('휴대전화 번호를 입력해주세요.');
+            setIsModalOpen(true);
+            setFocusTarget('phoneNumber');
+            return;
+        }
+
+        if (phoneNumber.length != 13) {
+            setModalContent('000-0000-0000 형식에 맞춰주세요.' + phoneNumber.length);
+            setIsModalOpen(true);
+            setFocusTarget('phoneNumber');
         }
     };
 
@@ -29,16 +100,35 @@ const RegistrationForm = () => {
                     style={styles.input}
                     value={email}
                     onChange={handleEmailChange}
+                    ref={emailRef}
                 />
 
                 <label style={styles.label}>비밀번호</label>
-                <input type="password" placeholder="비밀번호" style={styles.input} />
+                <input
+                    type="password"
+                    placeholder="비밀번호"
+                    style={styles.input}
+                    value={password1}
+                    onChange={handlePassword1Change}
+                    ref={password1Ref}
+                />
 
                 <label style={styles.label}>비밀번호 확인</label>
-                <input type="password" placeholder="비밀번호 확인" style={styles.input} />
+                <input type="password"
+                       placeholder="비밀번호 확인"
+                       style={styles.input}
+                       value={password2}
+                       onChange={handlePassword2Change}
+                />
 
                 <label style={styles.label}>전화번호</label>
-                <input type="tel" placeholder="전화번호" style={styles.input} />
+                <input
+                    type="tel"
+                    placeholder="000-0000-0000"
+                    style={styles.input}
+                    value={phoneNumber}
+                    onChange={handlePhoneNumberChange}
+                />
 
                 <div style={styles.selectGroup}>
                     <label style={styles.label}>년도/월</label>
@@ -54,7 +144,7 @@ const RegistrationForm = () => {
 
                 <div style={styles.radioContainer}>
                     <label style={styles.radioLabel}>
-                        <input type="radio" name="pet" value="dog" style={styles.radio} />
+                        <input type="radio" name="pet" value="dog" style={styles.radio} checked={true} />
                         강아지
                     </label>
                     <label style={styles.radioLabel}>
@@ -65,6 +155,9 @@ const RegistrationForm = () => {
 
                 <button type="submit" style={styles.button}>회원가입</button>
             </form>
+            <CustomModal show={isModalOpen} onClose={closeModal}>
+                <p>{modalContent}</p>
+            </CustomModal>
         </div>
     );
 };
