@@ -18,6 +18,7 @@ const RegistrationForm = () => {
 
     const emailRef = useRef(null);
     const password1Ref = useRef(null);
+    const phoneNumberRef = useRef(null);
 
     const closeModal = () => {
         setIsModalOpen(false);
@@ -25,6 +26,8 @@ const RegistrationForm = () => {
             emailRef.current.focus();
         } else if (focusTarget === 'password1') {
             password1Ref.current.focus();
+        } else if (focusTarget === 'phoneNumber') {
+            phoneNumberRef.current.focus();
         }
 
         setFocusTarget('');
@@ -84,7 +87,7 @@ const RegistrationForm = () => {
         }
 
         if (phoneNumber.length != 13) {
-            setModalContent('000-0000-0000 형식에 맞춰주세요.' + phoneNumber.length);
+            setModalContent('000-0000-0000 형식에 맞춰주세요.');
             setIsModalOpen(true);
             setFocusTarget('phoneNumber');
         }
@@ -128,6 +131,7 @@ const RegistrationForm = () => {
                     style={styles.input}
                     value={phoneNumber}
                     onChange={handlePhoneNumberChange}
+                    ref={phoneNumberRef}
                 />
 
                 <div style={styles.selectGroup}>
