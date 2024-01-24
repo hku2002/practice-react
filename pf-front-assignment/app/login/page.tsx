@@ -10,7 +10,7 @@ const LoginForm = () => {
                 <input type="password" placeholder="비밀번호" style={styles.input} />
                 <div style={styles.buttonContainer}>
                     <button type="submit" style={styles.button}>로그인</button>
-                    <Link href="/register" passHref>
+                    <Link href="/registeration" passHref>
                         <button type="button" style={styles.button}>회원가입</button>
                     </Link>
                 </div>
