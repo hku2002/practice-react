@@ -1,15 +1,35 @@
-import React from 'react';
+'use client'
+import React, {useState} from 'react';
 
 const RegistrationForm = () => {
     // 년도와 월을 위한 데이터 생성
     const years = Array.from({ length: 101 }, (_, i) => new Date().getFullYear() - i);
     const months = Array.from({ length: 12 }, (_, i) => i + 1);
 
+    const [email, setEmail] = useState('');
+
+    const handleEmailChange = (event) => {
+        setEmail(event.target.value);
+    };
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        if (!email.trim()) {
+            alert('이메일을 입력해주세요.');
+            return;
+        }
+    };
+
     return (
         <div style={styles.container}>
-            <form style={styles.form}>
+            <form onSubmit={handleSubmit} style={styles.form}>
                 <label style={styles.label}>이메일</label>
-                <input type="email" placeholder="이메일" style={styles.input} />
+                <input
+                    type="email"
+                    placeholder="이메일"
+                    style={styles.input}
+                    value={email}
+                    onChange={handleEmailChange}
+                />
 
                 <label style={styles.label}>비밀번호</label>
                 <input type="password" placeholder="비밀번호" style={styles.input} />
@@ -80,7 +100,7 @@ const styles = {
     selectGroup: {
         display: 'flex',
         flexDirection: 'column',
-        marginBottom: '10px',
+        marginBottom: '20px',
     },
 
     selectContainer: {
@@ -89,7 +109,7 @@ const styles = {
     },
 
     select: {
-        width: '48%', // 년도와 월 선택 박스가 한 줄에 들어갈 수 있도록 너비 설정
+        width: '48%',
         padding: '10px',
         borderRadius: '5px',
         border: '1px solid #ccc',
